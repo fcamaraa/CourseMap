@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Degree Map</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin-top: 50px;
+      }
+      h1 {
+        color: #2c3e50;
+      }
+      .button {
+        padding: 15px 30px;
+        font-size: 16px;
+        margin: 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+      }
+      .columbia {
+        background-color: #1e3a8a;
+        color: white;
+      }
+      .queens-college {
+        background-color: #007a3d;
+        color: white;
+      }
+      .button:hover {
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to Degree Map</h1>
+    <button
+      class="button columbia"
+      onclick="window.location.href='columbia.html'"
+    >
+      Columbia University
+    </button>
+    <button
+      class="button queens-college"
+      onclick="window.location.href='queens_college.html'"
+    >
+      Queens College
+    </button>
+  </body>
+</html>
