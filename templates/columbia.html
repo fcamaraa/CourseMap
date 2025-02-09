@@ -3,18 +3,153 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Columbia CS Courses</title>
+    <link
+    rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+  />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Plan Your Schedule</title>
+    <style>
+      .checkbox-container {
+       
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+      .select{
+         
+    padding: 10px;
+    font-size: 16px;
+}
+      
+    </style>
   </head>
   <body>
-    <h1>Columbia Computer Science Courses</h1>
-    <ul>
-      {% for course in courses %} {% if "**Any 3 CS electives" in course %}
-      <li><strong>{{ course.replace("**", "") }}</strong></li>
-      {% else %}
-      <li>{{ course }}</li>
-      {% endif %} {% endfor %}
-    </ul>
-    <button onclick="window.location.href='/plan_schedule'">Let's Plan Your Schedule</button>
-</body>
+    <h1>Plan Your Schedule</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+    <form action="/plan_schedule" method="POST">
+      <div>
+        <label for="year">What year are you in?</label>
+        <select name="year" id="year" required>
+          <option value="Freshman">Freshman</option>
+          <option value="Sophomore">Sophomore</option>
+          <option value="Junior">Junior</option>
+          <option value="Senior">Senior</option>
+        </select>
+      </div>
+
+      <label for="semester">What semester are you in?</label>
+      <select id="semester" name="semester" required>
+        <option value="fall">Fall</option>
+        <option value="spring">Spring</option>
+        <option value="summer">Summer</option>
+        <option value="winter">Winter</option>
+      </select>
+
+      <div>
+        <label
+          >What CS courses have you already taken? (Select all that
+          apply)</label
+        ><br />
+        <div class="checkbox-container">
+          <label
+            ><input type="checkbox" name="taken_courses[]" value="COMS W1004" />
+            COMS W1004 - Intro to CS</label
+          >
+          <label
+            ><input type="checkbox" name="taken_courses[]" value="COMS W3134" />
+            COMS W3134 - Data Structures</label
+          >
+          <label
+            ><input type="checkbox" name="taken_courses[]" value="COMS W3157" />
+            COMS W3157 - Advanced Programming</label
+          >
+          <label
+            ><input type="checkbox" name="taken_courses[]" value="COMS W3203" />
+            COMS W3203 - Discrete Math</label
+          >
+          <label
+            ><input type="checkbox" name="taken_courses[]" value="COMS W3261" />
+            COMS W3261 - CS Theory</label
+          >
+          <label
+            ><input type="checkbox" name="taken_courses[]" value="CSEE W3827" />
+            CSEE W3827 - Fundamentals of Computer Systems</label
+          >
+          <label
+            ><input type="checkbox" name="taken_courses[]" value="Calculus 3" />
+            Calculus 3</label
+          >
+          <label
+            ><input
+              type="checkbox"
+              name="taken_courses[]"
+              value="MATH UN1201"
+            />
+            MATH UN1201 - Linear Algebra</label
+          >
+          <label
+            ><input
+              type="checkbox"
+              name="taken_courses[]"
+              value="MATH UN1205"
+            />
+            MATH UN1205 - Calculus 1</label
+          >
+          <label
+            ><input type="checkbox" name="taken_courses[]" value="COMS W4111" />
+            COMS W4111 - Introduction to Databases</label
+          >
+          <label
+            ><input type="checkbox" name="taken_courses[]" value="COMS W4118" />
+            COMS W4118 - Operating Systems</label
+          >
+          <label
+            ><input type="checkbox" name="taken_courses[]" value="COMS W4701" />
+            COMS W4701 - Artificial Intelligence</label
+          >
+          <label
+            ><input type="checkbox" name="taken_courses[]" value="COMS W4771" />
+            COMS W4771 - Machine Learning</label
+          >
+        </div>
+      </div>
+
+      <button type="button" onclick="submitForm()">Generate Schedule</button>
+    </form>
+        </div>
+      
+    <div class="col-md-6">
+      <div id="scheduleResult"></div>
+    </div>
+    </div>
+
   </body>
+  <script>
+    function submitForm() {
+      const year = document.getElementById("year").value;
+      const semester = document.getElementById("semester").value;
+      const selectedCourses = Array.from(
+        document.querySelectorAll(".course-checkboxes input:checked")
+      ).map((checkbox) => checkbox.value);
+
+      fetch("/plan_schedule", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          year,
+          semester,
+          completedCourses: selectedCourses,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("scheduleResult").innerText = data.schedule;
+        })
+        .catch((error) => console.error("Error:", error));
+    }
+  </script>
 </html>
