@@ -1,9 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body></body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queens College Course Planner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        select, button {
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Queens College Course Planner</h1>
+    <form id="plannerForm">
+        <label for="year">What year are you?</label>
+        <select id="year" name="year" required>
+            <option value="freshman">Freshman</option>
+            <option value="sophomore">Sophomore</option>
+            <option value="junior">Junior</option>
+            <option value="senior">Senior</option>
+        </select>
+
+        <label for="semester">What semester are you in?</label>
+        <select id="semester" name="semester" required>
+            <option value="fall">Fall</option>
+            <option value="spring">Spring</option>
+            <option value="summer">Summer</option>
+        </select>
+
+        <label for="completedCourses">Select the courses you have already taken:</label>
+        <select id="completedCourses" name="completedCourses" multiple size="10">
+            <option value="CS111">Introduction to Algorithmic Problem-Solving (CS111)</option>
+            <option value="Math120">Discrete Mathematics (Math120)</option>
+            <option value="CS211">Object-Oriented Programming in C++ (CS211)</option>
+            <option value="CS212">Object-Oriented Programming in Java (CS212)</option>
+            <option value="CS220">Discrete Structures (CS220)</option>
+            <option value="CS313">Data Structures (CS313)</option>
+            <option value="CS320">Theory of Computation (CS320)</option>
+            <option value="CS323">Design and Analysis of Algorithms (CS323)</option>
+            <option value="CS331">Database Systems (CS331)</option>
+            <option value="CS370">Software Engineering (CS370)</option>
+            <option value="CS316">Principles of Programming Languages (CS316)</option>
+            <option value="CS340">Operating Systems Principles (CS340)</option>
+            <option value="CS343">Computer Architecture (CS343)</option>
+            <option value="Math141">Calculus I (Math141)</option>
+            <option value="Math142">Calculus II (Math142)</option>
+            <option value="Math143">Calculus III (Math143)</option>
+            <option value="Math151">Calculus I (Alternative Path) (Math151)</option>
+            <option value="Math152">Calculus II (Alternative Path) (Math152)</option>
+            <option value="Math241">Probability and Statistics (Math241)</option>
+        </select>        
+
+        <button type="button" onclick="logSelectedCourses()">Generate Schedule</button>
+    </form>
+
+    <script>
+        // Function to log selected courses
+        function logSelectedCourses() {
+            const completedCoursesSelect = document.getElementById('completedCourses');
+            const selectedCourses = Array.from(completedCoursesSelect.selectedOptions).map(option => option.value);
+
+            console.log('Selected Courses:', selectedCourses);
+            alert('Selected Courses: ' + selectedCourses.join(', '));
+        }
+    </script>
+</body>
 </html>

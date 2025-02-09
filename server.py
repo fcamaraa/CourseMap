@@ -1,28 +1,22 @@
-import time
-
-
-import json
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route('/queens_college')
+# Route for Queens College Page
 @app.route('/queens_college')
 def queens_college_page():
-    # Load the JSON data
-    with open('Data/courses.json', 'r') as file:
-        courses = json.load(file)
-
-    # Pass the courses to the template
-    return render_template('queens_college.html', courses=courses)
-def index():
     return render_template('queens_college.html')
+
+# Route for Columbia Page
 @app.route('/columbia')
 def history_page():
     return render_template('columbia.html')
+
+# Route for Home Page
 @app.route('/')
 def home():
     return render_template('home.html')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
+
