@@ -19,17 +19,69 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}" />
+    <style>
+      /* Navbar Styling */
+      ul.navbar {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        background-color: #333;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      ul.navbar li {
+        position: relative;
+      }
+
+      ul.navbar li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 20px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+
+      ul.navbar li a:hover {
+        background-color: #111;
+      }
+
+      ul.navbar li a.active {
+        background-color: #04aa6d;
+      }
+
+      /* Right-aligned 'About' link */
+      ul.navbar li.right {
+        margin-left: auto;
+      }
+
+      /* Responsive Styling */
+      @media screen and (max-width: 768px) {
+        ul.navbar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        ul.navbar li {
+          width: 100%;
+          text-align: left;
+        }
+      }
+    </style>
   </head>
   <body>
-    <ul>
+    <ul class="navbar">
       <li><a href="/">Home</a></li>
       <li><a href="/columbia">Columbia</a></li>
       <li><a href="/queens_college">Queens College</a></li>
-      <li style="float: right"><a class="active" href="#about">About</a></li>
+      <li class="right"><a class="active" href="#about">About</a></li>
     </ul>
     <div class="container-fluid">{% block content %} {% endblock %}</div>
   </body>
 </html>
+
 
 <style>
   ul {
