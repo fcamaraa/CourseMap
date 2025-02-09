@@ -1,21 +1,18 @@
-
-import time
-
-
-import json
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+import time 
 
 app = Flask(__name__)
 
 @app.route('/queens_college')
-def index():
+def queens_college():
     return render_template('queens_college.html')
 @app.route('/columbia')
-def history_page():
+def columbia():
     return render_template('columbia.html')
 @app.route('/')
 def home():
     return render_template('home.html')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
+    
