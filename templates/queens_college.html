@@ -3,7 +3,178 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Queens College Course Planner</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      form {
+        max-width: 400px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      select,
+      button {
+        padding: 10px;
+        font-size: 16px;
+      }
+      #scheduleResult {
+        margin-top: 20px;
+        font-weight: bold;
+        white-space: pre-wrap;
+      }
+      .course-checkboxes label {
+        display: block;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <h1 style="text-align: center">Queens College Course Planner</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <form id="plannerForm">
+            <label for="year">What year are you?</label>
+            <select id="year" name="year" required>
+              <option value="freshman">Freshman</option>
+              <option value="sophomore">Sophomore</option>
+              <option value="junior">Junior</option>
+              <option value="senior">Senior</option>
+            </select>
+
+            <label for="semester">What semester are you in?</label>
+            <select id="semester" name="semester" required>
+              <option value="fall">Fall</option>
+              <option value="spring">Spring</option>
+              <option value="summer">Summer</option>
+            </select>
+
+            <label>Select the courses you have already taken:</label>
+            <div class="course-checkboxes">
+              <label
+                ><input type="checkbox" value="CS111" /> Introduction to
+                Algorithmic Problem-Solving (CS111)</label
+              >
+              <label
+                ><input type="checkbox" value="Math120" /> Discrete Mathematics
+                (Math120)</label
+              >
+              <label
+                ><input type="checkbox" value="CS211" /> Object-Oriented
+                Programming in C++ (CS211)</label
+              >
+              <label
+                ><input type="checkbox" value="CS212" /> Object-Oriented
+                Programming in Java (CS212)</label
+              >
+              <label
+                ><input type="checkbox" value="CS220" /> Discrete Structures
+                (CS220)</label
+              >
+              <label
+                ><input type="checkbox" value="CS313" /> Data Structures
+                (CS313)</label
+              >
+              <label
+                ><input type="checkbox" value="CS320" /> Theory of Computation
+                (CS320)</label
+              >
+              <label
+                ><input type="checkbox" value="CS323" /> Design and Analysis of
+                Algorithms (CS323)</label
+              >
+              <label
+                ><input type="checkbox" value="CS331" /> Database Systems
+                (CS331)</label
+              >
+              <label
+                ><input type="checkbox" value="CS370" /> Software Engineering
+                (CS370)</label
+              >
+              <label
+                ><input type="checkbox" value="CS316" /> Principles of
+                Programming Languages (CS316)</label
+              >
+              <label
+                ><input type="checkbox" value="CS340" /> Operating Systems
+                Principles (CS340)</label
+              >
+              <label
+                ><input type="checkbox" value="CS343" /> Computer Architecture
+                (CS343)</label
+              >
+              <label
+                ><input type="checkbox" value="Math141" /> Calculus I
+                (Math141)</label
+              >
+              <label
+                ><input type="checkbox" value="Math142" /> Calculus II
+                (Math142)</label
+              >
+              <label
+                ><input type="checkbox" value="Math143" /> Calculus III
+                (Math143)</label
+              >
+              <label
+                ><input type="checkbox" value="Math151" /> Calculus I
+                (Alternative Path) (Math151)</label
+              >
+              <label
+                ><input type="checkbox" value="Math152" /> Calculus II
+                (Alternative Path) (Math152)</label
+              >
+              <label
+                ><input type="checkbox" value="Math241" /> Probability and
+                Statistics (Math241)</label
+              >
+            </div>
+
+            <button type="button" onclick="submitForm()">
+              Generate Schedule
+            </button>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <div id="scheduleResult"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function submitForm() {
+        const year = document.getElementById("year").value;
+        const semester = document.getElementById("semester").value;
+        const selectedCourses = Array.from(
+          document.querySelectorAll(".course-checkboxes input:checked")
+        ).map((checkbox) => checkbox.value);
+
+        fetch("/generate_schedule", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            year,
+            semester,
+            completedCourses: selectedCourses,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("scheduleResult").innerText = data.schedule;
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+    </script>
+  </body>
 </html>
