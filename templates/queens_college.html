@@ -1,150 +1,169 @@
-{% extends "layout.html" %} {% block content %}
+{% extends "layout.html" %} 
+{% block content %}
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <title>Queens College Course Planner</title>
+
     <style>
       body {
         font-family: Arial, sans-serif;
         margin: 20px;
       }
-      form {
-        max-width: 400px;
-
+      
+      /* Container: centered horizontally and vertically */
+      .container {
         display: flex;
-        flex-direction: column;
-        gap: 20px;
+        justify-content: center;
+        align-items: center;
+        min-height: 40vh;
       }
+
+      /* Centered the form container */
+      .form-container {
+        max-width: 100%;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 1200px;  /* To prevent large width */
+      }
+
       select,
       button {
         padding: 10px;
         font-size: 16px;
       }
+
+      .course-checkboxes {
+        max-height: 100px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: white;
+      }
+
+      /* Schedule Output Styling */
       #scheduleResult {
         margin-top: 20px;
         font-weight: bold;
         white-space: pre-wrap;
-      }
-      .course-checkboxes label {
+        padding: 10px;
+        background-color: #e9f7fc;
+        border: 1px solid #ddd;
+        border-radius: 5px;
         display: block;
       }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      /* Example Schedule on initial load */
+      #exampleSchedule {
+        padding: 10px;
+        padding-bottom: 70px;
+        background-color: #ffffff;
+        border: 1px solid #000000;
+        border-radius: 5px;
+        font-size: 14px;
+        color: #adabab;
+      }
+
     </style>
   </head>
   <body>
-    <h1 style="text-align: center">Queens College Course Planner</h1>
+    <h1 class="text-center">Queens College Course Planner</h1>
     <div class="container">
-      <div class="row">
+      <div class="row" id="mainRow">
+        <!-- Left Column: Course Selection Form -->
         <div class="col-md-6">
-          <form id="plannerForm">
-            <label for="year">What year are you?</label>
-            <select id="year" name="year" required>
-              <option value="freshman">Freshman</option>
-              <option value="sophomore">Sophomore</option>
-              <option value="junior">Junior</option>
-              <option value="senior">Senior</option>
-            </select>
+          <div class="form-container">
+            <form id="plannerForm">
+              <div class="form-group">
+                <label for="year"><strong>What year are you?</strong></label>
+                <select id="year" name="year" class="form-control" required>
+                  <option value="freshman">Freshman</option>
+                  <option value="sophomore">Sophomore</option>
+                  <option value="junior">Junior</option>
+                  <option value="senior">Senior</option>
+                </select>
+              </div>
 
-            <label for="semester">What semester are you in?</label>
-            <select id="semester" name="semester" required>
-              <option value="fall">Fall</option>
-              <option value="spring">Spring</option>
-              <option value="summer">Summer</option>
-            </select>
+              <div class="form-group">
+                <label for="semester"><strong>What semester are you in?</strong></label>
+                <select id="semester" name="semester" class="form-control" required>
+                  <option value="fall">Fall</option>
+                  <option value="spring">Spring</option>
+                  <option value="summer">Summer</option>
+                </select>
+              </div>
 
-            <label>Select the courses you have already taken:</label>
-            <div class="course-checkboxes">
-              <label
-                ><input type="checkbox" value="CS111" /> Introduction to
-                Algorithmic Problem-Solving (CS111)</label
-              >
-              <label
-                ><input type="checkbox" value="Math120" /> Discrete Mathematics
-                (Math120)</label
-              >
-              <label
-                ><input type="checkbox" value="CS211" /> Object-Oriented
-                Programming in C++ (CS211)</label
-              >
-              <label
-                ><input type="checkbox" value="CS212" /> Object-Oriented
-                Programming in Java (CS212)</label
-              >
-              <label
-                ><input type="checkbox" value="CS220" /> Discrete Structures
-                (CS220)</label
-              >
-              <label
-                ><input type="checkbox" value="CS313" /> Data Structures
-                (CS313)</label
-              >
-              <label
-                ><input type="checkbox" value="CS320" /> Theory of Computation
-                (CS320)</label
-              >
-              <label
-                ><input type="checkbox" value="CS323" /> Design and Analysis of
-                Algorithms (CS323)</label
-              >
-              <label
-                ><input type="checkbox" value="CS331" /> Database Systems
-                (CS331)</label
-              >
-              <label
-                ><input type="checkbox" value="CS370" /> Software Engineering
-                (CS370)</label
-              >
-              <label
-                ><input type="checkbox" value="CS316" /> Principles of
-                Programming Languages (CS316)</label
-              >
-              <label
-                ><input type="checkbox" value="CS340" /> Operating Systems
-                Principles (CS340)</label
-              >
-              <label
-                ><input type="checkbox" value="CS343" /> Computer Architecture
-                (CS343)</label
-              >
-              <label
-                ><input type="checkbox" value="Math141" /> Calculus I
-                (Math141)</label
-              >
-              <label
-                ><input type="checkbox" value="Math142" /> Calculus II
-                (Math142)</label
-              >
-              <label
-                ><input type="checkbox" value="Math143" /> Calculus III
-                (Math143)</label
-              >
-              <label
-                ><input type="checkbox" value="Math151" /> Calculus I
-                (Alternative Path) (Math151)</label
-              >
-              <label
-                ><input type="checkbox" value="Math152" /> Calculus II
-                (Alternative Path) (Math152)</label
-              >
-              <label
-                ><input type="checkbox" value="Math241" /> Probability and
-                Statistics (Math241)</label
-              >
-            </div>
+              <div class="form-group">
+                <label><strong>Select the courses you have already taken:</strong></label>
+                <button type="button" class="btn btn-info btn-sm mb-2" data-toggle="collapse" data-target="#courseList">
+                  Show/Hide Courses
+                </button>
+                <div id="courseList" class="collapse course-checkboxes">
+                  {% for course in [
+                    ('CS111', 'Introduction to Algorithmic Problem-Solving'),
+                    ('Math120', 'Discrete Mathematics'),
+                    ('CS211', 'Object-Oriented Programming in C++'),
+                    ('CS212', 'Object-Oriented Programming in Java'),
+                    ('CS220', 'Discrete Structures'),
+                    ('CS313', 'Data Structures'),
+                    ('CS320', 'Theory of Computation'),
+                    ('CS323', 'Design and Analysis of Algorithms'),
+                    ('CS331', 'Database Systems'),
+                    ('CS370', 'Software Engineering'),
+                    ('CS316', 'Principles of Programming Languages'),
+                    ('CS340', 'Operating Systems Principles'),
+                    ('CS343', 'Computer Architecture'),
+                    ('Math141', 'Calculus I'),
+                    ('Math142', 'Calculus II'),
+                    ('Math143', 'Calculus III'),
+                    ('Math151', 'Calculus I (Alternative Path)'),
+                    ('Math152', 'Calculus II (Alternative Path)'),
+                    ('Math241', 'Probability and Statistics')
+                  ] %}
+                  <label>
+                    <input type="checkbox" value="{{ course[0] }}" /> {{ course[1] }} ({{ course[0] }})
+                  </label>
+                  {% endfor %}
+                </div>
+              </div>
 
-            <button type="button" onclick="submitForm()">
-              Generate Schedule
-            </button>
-          </form>
+              <button type="button" class="btn btn-primary btn-block" onclick="submitForm()">
+                Generate Schedule
+              </button>
+            </form>
+          </div>
         </div>
+
+        <!-- Right Column: Schedule Output -->
         <div class="col-md-6">
-          <div id="scheduleResult"></div>
+          <!-- Display Example Schedule initially -->
+          <div id="exampleSchedule">
+            <h4>Example Schedule (No Selection Yet)</h4>
+            <ul>
+              <li>CS111: Introduction to Algorithmic Problem-Solving</li><br>
+              <li>Math120: Discrete Mathematics</li><br>
+              <li>CS211: Object-Oriented Programming in C++</li><br>
+              <li>CS313: Data Structures</li><br>
+              <li>CS320: Theory of Computation</li>
+            </ul>
+          </div>
+          <div id="scheduleResult" class="alert alert-info" style="display: none;"></div>
         </div>
       </div>
     </div>
@@ -156,6 +175,11 @@
         const selectedCourses = Array.from(
           document.querySelectorAll(".course-checkboxes input:checked")
         ).map((checkbox) => checkbox.value);
+
+        // Hide example schedule and show the result
+        document.getElementById("exampleSchedule").style.display = "none";
+        document.getElementById("scheduleResult").style.display = "block";
+        document.getElementById("scheduleResult").innerText = "Generating schedule...";
 
         fetch("/generate_schedule", {
           method: "POST",
@@ -170,10 +194,14 @@
           .then((data) => {
             document.getElementById("scheduleResult").innerText = data.schedule;
           })
-          .catch((error) => console.error("Error:", error));
+          .catch((error) => {
+            document.getElementById("scheduleResult").innerText = "Error generating schedule.";
+            console.error("Error:", error);
+          });
       }
     </script>
   </body>
 </html>
 
 {% endblock %}
+

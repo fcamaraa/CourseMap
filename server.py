@@ -1,4 +1,3 @@
-
 import time
 
 import requests
@@ -7,9 +6,11 @@ import json
 from flask import Flask, render_template, request, jsonify
 import os
 
+
 from groq import Groq
 apikey= "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"
 app = Flask(__name__)
+
 
 
 client = Groq(
@@ -143,4 +144,5 @@ def plan_schedule():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
+    

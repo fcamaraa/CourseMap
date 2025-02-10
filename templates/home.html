@@ -3,12 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Degree Map</title>
+   
+  </head>
+  <body>
+    <div class="image-container">
+      <img class="image-top" src="https://assets.collegedunia.com/public/college_data/images/studyabroad/appImage/college_1711_29-14:57_Columbia_University.jpeg" >
+      <img class="image-bottom" src="https://macaulay.cuny.edu/wp-content/uploads/2016/07/qc10_bg_000056-1920x1080.jpg" height = 50%>
+    </div>
+  
+    
+    <div class="container">
+      <div class = "bubble-title">
+      <h1>Welcome to Degree Map</h1>
+    </div>
+    <div style="border-left:2px solid #000;height:80px"></div>
+      <div class="column1">
+
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
     <title>Degree Map</title>
   </head>
+      <div class="container">
+      <div class = "bubble-title">
+      <h1>Welcome to Degree Map</h1>
+    </div>
+    <div style="border-left:2px solid #000;height:80px"></div>
+      <div class="column1">
   <body>
     <div class="image-container">
       <img
@@ -28,6 +53,7 @@
       </div>
       <div style="border-left: 2px solid #000; height: 80px"></div>
       <div class="column1">
+
         <a href="/columbia">
           <span>Columbia University</span>
           <span>Columbia University</span>
@@ -35,6 +61,8 @@
           <span>Columbia University</span>
         </a>
       </div>
+
+  
 
       <div class="column2">
         <a href="/queens_college">
@@ -46,4 +74,5 @@
       </div>
     </div>
   </body>
+  
 </html>
